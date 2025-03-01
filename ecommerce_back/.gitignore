@@ -1,0 +1,13 @@
+itmp/
+.env
+*.pem
+dist/
+.vscode/
+bun.lockb
+yarn.lock
+node_modules/
+pnpm-lock.yaml
+private/profile/
+private/voucher/
+package-lock.json
+service-account.json
