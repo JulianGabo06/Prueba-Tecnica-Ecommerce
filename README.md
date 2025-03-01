@@ -1,4 +1,4 @@
-# ShopZone Pro
+# Ecommerce
 
 ShopZone Pro es una aplicación web de comercio electrónico diseñada para permitir a los usuarios ver productos, registrarse, iniciar sesión y gestionar productos con operaciones avanzadas como agregar, actualizar y eliminar. La aplicación implementa roles y permisos para diferenciar las funcionalidades a las que tienen acceso los usuarios, proporcionando un entorno seguro y fácil de usar tanto para los administradores como para los clientes.
 
