@@ -78,8 +78,6 @@ ecommerce_back/
 
 ## Configuración del Proyecto
 
-Requisitos Previos Node.js (versión >= 18) Next.js (versión 14) Base de datos Mariadb `(Recomendado subir con contenedor de docker con la imagen de mariadb noble, es mas rapido)`, Git
-
 ## Instalación
 
 Clona el repositorio:
@@ -158,6 +156,6 @@ Este se levanta en el puerto [`5000`](http://localhost:5000).
 
 ### Este proyecto está realizado con las tecnologias de
 
-Backend: Node.js, express, jwt, express validator, MySql, sequelize.
+Backend: Node.js, express, jwt, express validator, mariadb, sequelize.
 
 Frontend: Next.js v14.2, typescript, react, zustand para el manejo de estados, middleware de next para la protección de ruas, lo podrás encontrar en el archivo `src/middleware.ts`.
