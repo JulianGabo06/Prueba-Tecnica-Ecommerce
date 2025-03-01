@@ -158,6 +158,6 @@ Este se levanta en el puerto [`5000`](http://localhost:5000).
 
 ### Este proyecto está realizado con las tecnologias de
 
-Backend: Node.js, express, jwt, express validator, mariadb, sequelize.
+Backend: Node.js, express, jwt, express validator, MySql, sequelize.
 
 Frontend: Next.js v14.2, typescript, react, zustand para el manejo de estados, middleware de next para la protección de ruas, lo podrás encontrar en el archivo `src/middleware.ts`.
