@@ -36,7 +36,7 @@ ShopZone Pro es una aplicación web de comercio electrónico diseñada para perm
    - Estructura del Proyecto
 
 ```
-shop_zone_pro_front/
+ecommerce_front/
 │
 ├── public/                # Archivos públicos como imágenes y otros recursos.
 ├── src/
@@ -57,6 +57,25 @@ shop_zone_pro_front/
 └── README.md              # Documentación del proyecto.
 ```
 
+```
+ecommerce_back/
+│
+├── public/                # Archivos públicos como imágenes y otros recursos.
+├── src/
+│   ├── assets/            # creacion de html recover password.
+│   ├── config/            # Configuraciones de variables de entorno.
+│   ├── controllers/       # controladores del aplicativo.
+│   ├── helpers/           # funciones que ayudan a la mejora de los routers.
+│   ├── middlewares/       # Manejo de validaciones por roles y usuarios.
+│   └── Models/            # Modelos de tablas.
+|   |-- router/            # Gestion de rutas del aplicativo
+|   |-- utils/             # Funciones de creacion de tokens, manejo de archivos, etc
+├── .env                   # Variables de entorno para configuración.
+├── next.config.mjs        # Configuración de Next.js.
+├── jest.config.js         # Configuración de Jest para pruebas.
+└── README.md              # Documentación del proyecto.
+```
+
 ## Configuración del Proyecto
 
 Requisitos Previos Node.js (versión >= 18) Next.js (versión 14) Base de datos Mariadb `(Recomendado subir con contenedor de docker con la imagen de mariadb noble, es mas rapido)`, Git
@@ -66,30 +85,30 @@ Requisitos Previos Node.js (versión >= 18) Next.js (versión 14) Base de datos 
 Clona el repositorio:
 
 ```bash
-git clone https://github.com/tuusuario/shop_zone_pro.git
+git clone https://github.com/tuusuario/ecommerce.git
 ```
 
 ### Navega al directorio del proyecto e instala las dependencias:
 
 ```bash
-cd shop_zone_pro
+cd ecommerce
 ```
 
 (En mi caso usé bun, puede usar el que mas se acomode ejemplo con npm)
 
 ```bash
-cd shop_zone_pro_front & npm install
+cd ecommerce_front & npm install
 ```
 
 Instalar las dependecias también del backend
 
 ```bash
-cd .. & cd shop_zone_pro_back & npm install
+cd .. & cd ecommerce_back & npm install
 ```
 
-Agrega el archivo `.env` en la raiz del fichero del backend `/shop_zone_pro_back/.env` y reemplaza las variables de entorno de la base de datos por las de tu DB.
+Agrega el archivo `.env` en la raiz del fichero del backend `/ecommerce_back/.env` y reemplaza las variables de entorno de la base de datos por las de tu DB. (Ahí tienes un .env.example de ejemplo de como ponerlas)
 
-Agrega el archivo `.env` en la raiz del fichero del front `/shop_zone_pro_front/.env` La unica variable de entorno que toma es `URL_BACK` ejemplo:
+Agrega el archivo `.env` en la raiz del fichero del front `/ecommerce_front/.env` La unica variable de entorno que toma es `URL_BACK` ejemplo:
 
 ```
 URL_BACK=http//localhost:3200/api/
@@ -102,16 +121,16 @@ URL_BACK=http//localhost:3200/api/
 #### Ahora ejecutar el backend y front en modo dev
 
 ```bash
-cd shop_zone_pro_front & npm run dev
+cd ecommerce_front & npm run dev
 ```
 
 Este se levanta en el puerto [`4030`](http://localhost:4030).
 
 ```bash
-cd shop_zone_pro_back & npm run dev
+cd ecommerce_back & npm run dev
 ```
 
-Este se levanta en el puerto [`3200`](http://localhost:3200).
+Este se levanta en el puerto [`5000`](http://localhost:5000).
 
 ## Rutas a la cual puedes acceder
 
@@ -120,8 +139,8 @@ Este se levanta en el puerto [`3200`](http://localhost:3200).
 - /
 - /products
 - /signup
-- /recover-password
-- /change-password
+- /orders
+- /Cart
 
 ##### Tipo de usuario `Admin`
 
@@ -135,6 +154,7 @@ Este se levanta en el puerto [`3200`](http://localhost:3200).
 - /admin/products/create-product
 - /admin/categories
 - /admin/categories/create-category
+- /admin/orders
 
 ### Este proyecto está realizado con las tecnologias de
 
