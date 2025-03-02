@@ -13,7 +13,7 @@ import {
   Typography,
 } from "@mui/material";
 import Image from "next/image";
-import useCart from "./useCart";
+import useCart from "../../cart/useCart";
 import { useShoppeKart } from "@/stores/ShoppeKart/shoppekart.store";
 import { useRouter } from "next/navigation";
 import { useUserStore } from "@/stores/user/user.store";

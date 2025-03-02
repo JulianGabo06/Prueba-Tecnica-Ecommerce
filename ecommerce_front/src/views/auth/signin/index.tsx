@@ -7,9 +7,13 @@ import Link from "next/link";
 import Face5Icon from "@mui/icons-material/Face5";
 import { LoadingButton } from "@mui/lab";
 import useLogin from "./useLogin";
+import { useUserStore } from "@/stores/user/user.store";
 
 const SignIn = (): JSX.Element => {
-  const { handleChange, handleSubmit, email, password, loadingApi } = useLogin();
+  const { user } = useUserStore((state) => state);
+  const { handleChange, handleSubmit, email, password, loadingApi } =
+    useLogin();
+  console.log(user);
   return (
     <Container component="main">
       <Stack

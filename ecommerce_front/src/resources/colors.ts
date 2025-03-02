@@ -1,23 +1,23 @@
 "use client";
 const colors = {
-  primary: "#3C84BE",
+  primary: "#F95F2E",
   primaryLight: "#FDB396",
+  primaryDark: "#df5a30",
   primaryExtraLight: "#FDD6C7",
   secondary: "#736CED",
   secondaryLight: "#AAA6E7",
   secondaryExtraLlight: "#E9D6FF",
-  text: "#1A1A1A",
-  textLight: "#666666",
-  textSubtitle: "#4D4D4D",
-  textPlaceholder: "#808080",
+  text: "#2D2A29",
+  textLight: "#4D4D4D",
+  textPrimary: "#F95F2E",
+  textSecondary: "#736CED",
+  textPlaceholder: "#B7B7B7",
+  textDescription: "#8F8F8F",
   contrastText: "#FFFFFF",
-  textDisabled: "#999999",
+  textDisabled: "#959596",
   backgorund: "#FFFFFF",
-  backgorundDark: "#333333",
-  borderColor: "#E6E6E6",
-  shadowActive: "#20B52652",
-  success: "#2C742F",
-  bgIcon: "#F2F2F2"
+  backgorundDark: "#2D2A29",
+  borderColor: "#EBEBEB",
 };
 
 export default colors;

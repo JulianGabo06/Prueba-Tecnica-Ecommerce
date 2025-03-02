@@ -31,7 +31,7 @@ const useCart = () => {
     }
   };
 
-  return { CreateOrder };
+  return { CreateOrder, orderResponse };
 };
 
 export default useCart;

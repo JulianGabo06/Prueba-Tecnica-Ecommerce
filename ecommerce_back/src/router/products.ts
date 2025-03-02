@@ -5,8 +5,13 @@ import { ProductController } from "../controllers";
 
 const router = Router();
 const { validateFields, validateJWT, validateAdminSeller } = middlewares;
-const { createProduct, getAllProducts, getProductById, deleteProduct } =
-  ProductController;
+const {
+  createProduct,
+  getAllProducts,
+  getProductById,
+  deleteProduct,
+  updateProduct,
+} = ProductController;
 
 //create product
 router.post(
@@ -42,6 +47,34 @@ router.get(
   "/:id",
   [check("id", "El id del producto es obligatorio").notEmpty(), validateFields],
   getProductById
+);
+
+// Actualizar producto
+router.put(
+  "/:id",
+  [
+    validateJWT,
+    validateAdminSeller,
+    check("id", "El ID del producto es obligatorio").isInt(),
+    check("name", "El nombre del producto es obligatorio")
+      .optional()
+      .notEmpty(),
+    check("description", "La descripción del producto es obligatoria")
+      .optional()
+      .notEmpty(),
+    check("price", "El valor del producto debe ser numérico")
+      .optional()
+      .isFloat({ min: 0 }),
+    check("stock", "El stock del producto debe ser un número entero")
+      .optional()
+      .isInt({ min: 0 }),
+    check("images", "Las imágenes deben ser un array").optional().isArray(),
+    check("categories", "Las categorías deben ser un array")
+      .optional()
+      .isArray(),
+    validateFields,
+  ],
+  updateProduct
 );
 
 //delete product

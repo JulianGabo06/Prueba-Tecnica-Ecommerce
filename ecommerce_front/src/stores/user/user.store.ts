@@ -2,7 +2,7 @@ import { StateCreator, create } from "zustand";
 import { createJSONStorage, devtools, persist } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
 import { State, SignInProps, Action, IUser } from "./user.interface";
-import cookiesStorage from "../cookies.storage"
+import cookiesStorage from "../cookies.storage";
 
 const initialState: State = {
   token: null,
@@ -26,7 +26,7 @@ export const useUserStore = create<State & Action>()(
   devtools(
     persist(immer(storeAPI), {
       name: "userSession",
-      storage: createJSONStorage(() => cookiesStorage)
+      storage: createJSONStorage(() => cookiesStorage),
     })
   )
 );

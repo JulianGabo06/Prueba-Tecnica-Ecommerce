@@ -100,6 +100,73 @@ const createProduct = async (req: Request, res: Response) => {
   }
 };
 
+// Update product
+const updateProduct = async (req: Request, res: Response) => {
+  const transaction = await db.transaction();
+  try {
+    const { id } = req.params;
+    const { name, price, stock, images, categories, description } = req.body;
+
+    const product: any = await ProductModel.findOne({
+      where: { id, status: true },
+    });
+
+    if (!product)
+      return res
+        .status(404)
+        .json({ status: false, msg: "Producto no encontrado" });
+
+    product.name = name.trim();
+    product.description = description.trim();
+    product.price = price;
+    product.stock = stock;
+
+    let dbImages = [];
+    if (images && images.length > 0) {
+      let i = 0;
+      const photos = await Promise.all(
+        images.map(async (photo: string) => {
+          i++;
+          const photoSaved = await FilesController.saveImageFromBase64(
+            photo,
+            `${product.id}${i}`,
+            `product_images`
+          );
+          return photoSaved.fileName;
+        })
+      );
+      dbImages = photos;
+    }
+    product.images = dbImages;
+
+    if (categories.length > 0) {
+      await ProductCategoryModel.destroy({
+        where: { product_id: id },
+        transaction,
+      });
+      const productCategories = categories.map((category: any) => ({
+        category_id: typeof category === "object" ? category.id : category,
+        product_id: id,
+      }));
+      await ProductCategoryModel.bulkCreate(productCategories, { transaction });
+    }
+
+    await product.save({ transaction });
+    await transaction.commit();
+
+    res
+      .status(200)
+      .json({ status: true, msg: "Producto actualizado con éxito" });
+  } catch (error) {
+    console.log(error);
+    await transaction.rollback();
+    return res.status(500).json({
+      status: false,
+      msg: "Por favor, comuníquese con el administrador. Error: Products - 003",
+    });
+  }
+};
+
 //get all products
 const getAllProducts = async (__: Request, res: Response) => {
   try {
@@ -210,4 +277,10 @@ const getProductById = async (req: Request, res: Response) => {
   }
 };
 
-export default { createProduct, getAllProducts, getProductById, deleteProduct };
+export default {
+  createProduct,
+  getAllProducts,
+  getProductById,
+  deleteProduct,
+  updateProduct,
+};

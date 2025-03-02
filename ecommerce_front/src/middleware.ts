@@ -26,7 +26,9 @@ export const middleware = (request: NextRequest) => {
 
   if (
     pathname.match(protectedPaths) &&
-    (!userSession?.state?.user || userSession?.state?.user?.role !== "admin")
+    (!userSession?.state?.user ||
+      (userSession?.state?.user?.role !== "admin" &&
+        userSession?.state?.user?.role !== "seller"))
   ) {
     console.log("Unauthorized access attempt to admin route.");
 

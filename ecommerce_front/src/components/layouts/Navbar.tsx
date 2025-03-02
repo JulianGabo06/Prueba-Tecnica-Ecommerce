@@ -21,7 +21,6 @@ import { useUserStore } from "@/stores/user/user.store";
 import ExpandMoreRoundedIcon from "@mui/icons-material/ExpandMoreRounded";
 import { useRouter } from "next/navigation";
 import ArrowDropDownOutlinedIcon from "@mui/icons-material/ArrowDropDownOutlined";
-import { setUseStrictShallowCopy } from "immer";
 import { useShoppeKart } from "@/stores/ShoppeKart/shoppekart.store";
 
 const links = [
@@ -43,7 +42,6 @@ const menuSeller = [
 
 const Navbar = (): JSX.Element => {
   const { clearCart, cart } = useShoppeKart((state) => state);
-  console.log(cart);
   const { user, logOut } = useUserStore((state) => state);
   const [settings, setSettings] = useState<HTMLElement | null>(null);
   const [adminMenu, setAdminMenu] = useState<HTMLElement | null>(null);
@@ -79,57 +77,7 @@ const Navbar = (): JSX.Element => {
       <Stack
         component="section"
         borderBottom={`1px solid ${colors.borderColor}`}
-      >
-        <Stack
-          component={Container}
-          direction="row"
-          gap={2}
-          justifyContent="space-between"
-          py={2}
-          sx={{ color: colors.textLight }}
-        >
-          <Typography>Envíos a todo el pais</Typography>
-          {!user?.name ? (
-            <Stack component="ul" direction="row" gap={1}>
-              <Typography component={Link} href="/" color="inherit">
-                Iniciar sesión
-              </Typography>
-              <Typography component="span">/</Typography>
-              <Typography component={Link} href="/signup" color="inherit">
-                Registrate
-              </Typography>
-            </Stack>
-          ) : (
-            <>
-              <Button
-                variant="text"
-                size="small"
-                sx={{ p: 0 }}
-                endIcon={<ExpandMoreRoundedIcon />}
-                onClick={handleOpenSettings}
-              >
-                <Typography variant="body2">{user.name}</Typography>
-              </Button>
-              <Menu
-                open={!!settings}
-                onClose={handleCloseSettings}
-                anchorEl={settings}
-              >
-                {user.role === "admin" && (
-                  <MenuItem onClick={handleGoAdmin}>
-                    <ListItemText>Panel admin</ListItemText>
-                  </MenuItem>
-                )}
-                <MenuItem onClick={handleLogOut}>
-                  <ListItemText sx={{ color: "red" }}>
-                    Cerrar sesión
-                  </ListItemText>
-                </MenuItem>
-              </Menu>
-            </>
-          )}
-        </Stack>
-      </Stack>
+      ></Stack>
       <Container component="main">
         <Stack
           component="header"
@@ -145,22 +93,63 @@ const Navbar = (): JSX.Element => {
             style={{ objectFit: "cover" }}
             priority
           />
-          <Input
-            placeholder="Search"
-            sx={{ minWidth: 300, display: { xs: "none", sm: "initial" } }}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <SearchIcon />
-                </InputAdornment>
-              ),
-            }}
-          />
+          <Stack gap={1} flexDirection={"row"} alignItems={"center"}>
+            <Input
+              placeholder="Search"
+              sx={{ minWidth: 300, display: { xs: "none", sm: "initial" } }}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <SearchIcon />
+                  </InputAdornment>
+                ),
+              }}
+            />
+            {!user?.name ? (
+              <Stack component="ul" direction="row" gap={1}>
+                <Typography component={Link} href="/" color="inherit">
+                  Iniciar sesión
+                </Typography>
+                <Typography component="span">/</Typography>
+                <Typography component={Link} href="/signup" color="inherit">
+                  Registrate
+                </Typography>
+              </Stack>
+            ) : (
+              <>
+                <Button
+                  variant="text"
+                  size="small"
+                  sx={{ p: 0 }}
+                  endIcon={<ExpandMoreRoundedIcon />}
+                  onClick={handleOpenSettings}
+                >
+                  <Typography variant="body2">{user.name}</Typography>
+                </Button>
+                <Menu
+                  open={!!settings}
+                  onClose={handleCloseSettings}
+                  anchorEl={settings}
+                >
+                  {user.role === "admin" && (
+                    <MenuItem onClick={handleGoAdmin}>
+                      <ListItemText>Panel admin</ListItemText>
+                    </MenuItem>
+                  )}
+                  <MenuItem onClick={handleLogOut}>
+                    <ListItemText sx={{ color: "red" }}>
+                      Cerrar sesión
+                    </ListItemText>
+                  </MenuItem>
+                </Menu>
+              </>
+            )}
+          </Stack>
         </Stack>
       </Container>
       <Stack
         component="nav"
-        bgcolor={colors.backgorundDark}
+        bgcolor={colors.primary}
         flexDirection={"row"}
         justifyContent={"space-between"}
       >
@@ -183,7 +172,7 @@ const Navbar = (): JSX.Element => {
                 sx={{ cursor: "pointer" }}
                 onClick={handleOpenAdminMenu}
               >
-                Admin{" "}
+                Panel{" "}
                 <ArrowDropDownOutlinedIcon
                   fontSize="small"
                   sx={{ width: 14, height: 11, p: 0 }}
@@ -216,7 +205,7 @@ const Navbar = (): JSX.Element => {
                 sx={{ cursor: "pointer" }}
                 onClick={handleOpenAdminMenu}
               >
-                Vendedor{" "}
+                Panel{" "}
                 <ArrowDropDownOutlinedIcon
                   fontSize="small"
                   sx={{ width: 14, height: 11, p: 0 }}

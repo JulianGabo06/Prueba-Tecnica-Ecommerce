@@ -68,11 +68,10 @@ ecommerce_back/
 │   ├── helpers/           # funciones que ayudan a la mejora de los routers.
 │   ├── middlewares/       # Manejo de validaciones por roles y usuarios.
 │   └── Models/            # Modelos de tablas.
+|   |-- private/           # Almacenamiento de imagenes
 |   |-- router/            # Gestion de rutas del aplicativo
 |   |-- utils/             # Funciones de creacion de tokens, manejo de archivos, etc
 ├── .env                   # Variables de entorno para configuración.
-├── next.config.mjs        # Configuración de Next.js.
-├── jest.config.js         # Configuración de Jest para pruebas.
 └── README.md              # Documentación del proyecto.
 ```
 
@@ -111,6 +110,8 @@ Agrega el archivo `.env` en la raiz del fichero del front `/ecommerce_front/.env
 ```
 URL_BACK=http//localhost:3200/api/
 ```
+
+#### ¡Importante¡ Cuando se cree la db y se haga la coneccion cree un usuario en el aplicativo web y cambiele el rol en la tabla de users`
 
 #### ¡Importante¡ la variable debe de terminar en `api/`
 

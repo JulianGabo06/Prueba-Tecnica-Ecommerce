@@ -53,7 +53,7 @@ const CreateOrUpdateProduct = ({ productSlug }: Props): JSX.Element => {
               Descripción
             </FormLabel>
             <Input
-              placeholder="Escribne una descripción para tu producto..."
+              placeholder="Escribe una descripción para tu producto..."
               variant="outlined"
               multiline
               rows={6}

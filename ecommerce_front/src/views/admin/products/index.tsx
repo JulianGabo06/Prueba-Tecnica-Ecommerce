@@ -1,13 +1,6 @@
 "use client";
 import ProductTable from "@/components/forms/ProductTable";
-import {
-  Alert,
-  Box,
-  Grow,
-  InputAdornment,
-  Stack,
-  styled,
-} from "@mui/material";
+import { Alert, Box, Grow, InputAdornment, Stack, styled } from "@mui/material";
 import React from "react";
 import useProducts from "./useProducts";
 import colors from "@/resources/colors";
@@ -26,9 +19,14 @@ const style = {
   bgcolor: colors.backgorund,
 };
 
-
 const Products = (): JSX.Element => {
-  const { products, handleDeleteProduct, handleFilterByName } = useProducts();
+  const {
+    products,
+    handleDeleteProduct,
+    handleFilterByName,
+    handleEditProduct,
+    handleDropChange,
+  } = useProducts();
 
   return (
     <>
@@ -58,6 +56,8 @@ const Products = (): JSX.Element => {
           <ProductTable
             products={products}
             handleDeleteProduct={handleDeleteProduct}
+            handleEditProduct={handleEditProduct}
+            handleDropChange={(file: File) => handleDropChange(file)}
           />
         </Box>
       </Stack>
