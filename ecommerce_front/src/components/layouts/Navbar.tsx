@@ -117,11 +117,6 @@ const Navbar = (): JSX.Element => {
                   onClose={handleCloseSettings}
                   anchorEl={settings}
                 >
-                  {user.role === "admin" && (
-                    <MenuItem onClick={handleGoAdmin}>
-                      <ListItemText>Panel admin</ListItemText>
-                    </MenuItem>
-                  )}
                   <MenuItem onClick={handleLogOut}>
                     <ListItemText sx={{ color: "red" }}>
                       Cerrar sesión
