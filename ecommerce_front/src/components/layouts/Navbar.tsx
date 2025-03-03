@@ -4,7 +4,9 @@ import {
   Box,
   Button,
   Container,
-  InputAdornment,
+  Drawer,
+  IconButton,
+  List,
   ListItem,
   ListItemText,
   Menu,
@@ -16,12 +18,10 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
 import logo from "@/assets/shopZoneLogo.png";
-import Input from "../forms/Input";
-import SearchIcon from "@mui/icons-material/Search";
-import { useUserStore } from "@/stores/user/user.store";
+import MenuIcon from "@mui/icons-material/Menu";
 import ExpandMoreRoundedIcon from "@mui/icons-material/ExpandMoreRounded";
 import { useRouter } from "next/navigation";
-import ArrowDropDownOutlinedIcon from "@mui/icons-material/ArrowDropDownOutlined";
+import { useUserStore } from "@/stores/user/user.store";
 import { useShoppeKart } from "@/stores/ShoppeKart/shoppekart.store";
 
 const links = [
@@ -30,15 +30,15 @@ const links = [
 ];
 
 const menuAdmin = [
-  { path: "products", name: "Productos" },
+  { path: "products", name: "Productos Admin" },
   { path: "categories", name: "Categorías" },
   { path: "users", name: "Usuarios" },
-  { path: "orders", name: "Ordenes" },
+  { path: "orders", name: "Órdenes" },
 ];
 const menuSeller = [
-  { path: "products", name: "Productos" },
+  { path: "products", name: "Productos Vendedor" },
   { path: "categories", name: "Categorías" },
-  { path: "orders", name: "Ordenes" },
+  { path: "orders", name: "Órdenes" },
 ];
 
 const Navbar = (): JSX.Element => {
@@ -46,31 +46,22 @@ const Navbar = (): JSX.Element => {
   const { user, logOut } = useUserStore((state) => state);
   const [settings, setSettings] = useState<HTMLElement | null>(null);
   const [adminMenu, setAdminMenu] = useState<HTMLElement | null>(null);
+  const [openDrawer, setOpenDrawer] = useState(false);
   const router = useRouter();
-  const handleOpenSettings = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setSettings(event.currentTarget);
-  };
-  const handleOpenAdminMenu = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAdminMenu(event.currentTarget);
+
+  const toggleDrawer = (open: boolean) => () => {
+    setOpenDrawer(open);
   };
 
-  const handleCloseSettings = () => setSettings(null);
-  const handleCloseAdminMenu = () => setAdminMenu(null);
-  const handleGoAdmin = () => {
-    handleCloseSettings();
-    router.push("/admin/products");
+  const handleOpenSettings = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setSettings(event.currentTarget);
   };
 
   const handleLogOut = () => {
     clearCart();
     logOut();
-    handleCloseSettings();
+    setSettings(null);
     router.replace("/");
-  };
-
-  const handleGoAdminRoute = (path: string) => {
-    handleCloseAdminMenu();
-    router.push(`/admin/${path}`);
   };
 
   return (
@@ -78,16 +69,19 @@ const Navbar = (): JSX.Element => {
       <Stack
         component="section"
         borderBottom={`1px solid ${colors.borderColor}`}
-      ></Stack>
+      />
       <Container component="main">
         <Stack
           component="header"
           py={2}
           direction="row"
-          gap={2}
+          alignItems="center"
           justifyContent="space-between"
         >
-          <Box />
+          <IconButton onClick={toggleDrawer(true)}>
+            <MenuIcon fontSize="large" />
+          </IconButton>
+
           <Stack gap={1} flexDirection={"row"} alignItems={"center"}>
             {!user?.name ? (
               <Stack component="ul" direction="row" gap={1}>
@@ -98,7 +92,7 @@ const Navbar = (): JSX.Element => {
                   /
                 </Typography>
                 <Typography component={Link} href="/signup" color="primary">
-                  Registrate
+                  Regístrate
                 </Typography>
               </Stack>
             ) : (
@@ -114,7 +108,7 @@ const Navbar = (): JSX.Element => {
                 </Button>
                 <Menu
                   open={!!settings}
-                  onClose={handleCloseSettings}
+                  onClose={() => setSettings(null)}
                   anchorEl={settings}
                 >
                   <MenuItem onClick={handleLogOut}>
@@ -128,110 +122,83 @@ const Navbar = (): JSX.Element => {
           </Stack>
         </Stack>
       </Container>
-      <Stack
-        component="nav"
-        bgcolor={colors.primary}
-        flexDirection={"row"}
-        justifyContent={"space-between"}
-      >
-        <Stack component={Container} gap={3} direction="row" py={2}>
+
+      {/* Sidebar Menu */}
+      <Drawer anchor="left" open={openDrawer} onClose={toggleDrawer(false)}>
+        <List sx={{ width: 250, p: 2 }}>
           {links.map(({ path, name }, index) => (
-            <Typography
-              component={Link}
+            <ListItem
               key={index}
+              component={Link}
               href={path}
-              color={colors.contrastText}
-              sx={{ textDecoration: " none" }}
+              sx={{
+                cursor: "pointer",
+                "&:hover": {
+                  textDecoration: "underline",
+                },
+              }}
             >
-              {name}
-            </Typography>
+              <ListItemText primary={name} />
+            </ListItem>
           ))}
-          {user && user.role === "admin" && (
-            <>
-              <Typography
-                color={colors.contrastText}
-                sx={{ cursor: "pointer" }}
-                onClick={handleOpenAdminMenu}
-              >
-                Panel{" "}
-                <ArrowDropDownOutlinedIcon
-                  fontSize="small"
-                  sx={{ width: 14, height: 11, p: 0 }}
-                />
-              </Typography>
-              <Menu
-                id="basic-menu"
-                anchorEl={adminMenu}
-                open={!!adminMenu}
-                onClose={handleCloseAdminMenu}
-                MenuListProps={{
-                  "aria-labelledby": "basic-button",
+          {user?.role === "admin" &&
+            menuAdmin.map(({ name, path }, index) => (
+              <ListItem
+                key={index}
+                onClick={() => router.push(`/admin/${path}`)}
+                sx={{
+                  cursor: "pointer",
+                  "&:hover": {
+                    textDecoration: "underline",
+                  },
                 }}
               >
-                {menuAdmin.map(({ name, path }, index) => (
-                  <MenuItem
-                    key={index}
-                    onClick={() => handleGoAdminRoute(path)}
-                  >
-                    <ListItemText>{name}</ListItemText>
-                  </MenuItem>
-                ))}
-              </Menu>
-            </>
-          )}
-          {user && user.role === "seller" && (
-            <>
-              <Typography
-                color={colors.contrastText}
-                sx={{ cursor: "pointer" }}
-                onClick={handleOpenAdminMenu}
-              >
-                Panel{" "}
-                <ArrowDropDownOutlinedIcon
-                  fontSize="small"
-                  sx={{ width: 14, height: 11, p: 0 }}
-                />
-              </Typography>
-              <Menu
-                id="basic-menu"
-                anchorEl={adminMenu}
-                open={!!adminMenu}
-                onClose={handleCloseAdminMenu}
-                MenuListProps={{
-                  "aria-labelledby": "basic-button",
+                <ListItemText primary={name} />
+              </ListItem>
+            ))}
+          {user?.role === "seller" &&
+            menuSeller.map(({ name, path }, index) => (
+              <ListItem
+                key={index}
+                onClick={() => router.push(`/admin/${path}`)}
+                sx={{
+                  cursor: "pointer",
+                  "&:hover": {
+                    textDecoration: "underline",
+                  },
                 }}
               >
-                {menuSeller.map(({ name, path }, index) => (
-                  <MenuItem
-                    key={index}
-                    onClick={() => handleGoAdminRoute(path)}
-                  >
-                    <ListItemText>{name}</ListItemText>
-                  </MenuItem>
-                ))}
-              </Menu>
-            </>
-          )}
+                <ListItemText primary={name} />
+              </ListItem>
+            ))}
           {user?.role === "user" && cart.length > 0 && (
-            <Typography
-              color={colors.contrastText}
-              sx={{ cursor: "pointer" }}
+            <ListItem
               onClick={() => router.push("/Cart")}
+              sx={{
+                cursor: "pointer",
+                "&:hover": {
+                  textDecoration: "underline",
+                },
+              }}
             >
-              Carrito
-            </Typography>
+              <ListItemText primary="Carrito" />
+            </ListItem>
           )}
           {user?.role === "user" && (
-            <Typography
-              color={colors.contrastText}
-              sx={{ cursor: "pointer" }}
+            <ListItem
               onClick={() => router.push("/orders")}
+              sx={{
+                cursor: "pointer",
+                "&:hover": {
+                  textDecoration: "underline",
+                },
+              }}
             >
-              Ordenes
-            </Typography>
+              <ListItemText primary="Órdenes" />
+            </ListItem>
           )}
-        </Stack>
-      </Stack>
+        </List>
+      </Drawer>
     </Stack>
   );
 };
