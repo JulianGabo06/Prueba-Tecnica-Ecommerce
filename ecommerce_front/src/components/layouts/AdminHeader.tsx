@@ -1,14 +1,7 @@
 "use client";
 import colors from "@/resources/colors";
-import {
-  Breadcrumbs,
-  Button,
-  IconButton,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Breadcrumbs, Button, Stack, Typography } from "@mui/material";
 import { usePathname, useRouter } from "next/navigation";
-import AddIcon from "@mui/icons-material/Add";
 
 const adminPaths = [
   { path: "admin", title: "Admin" },

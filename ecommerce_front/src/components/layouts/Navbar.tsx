@@ -14,10 +14,8 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
-import logo from "@/assets/shopZoneLogo.png";
 import MenuIcon from "@mui/icons-material/Menu";
 import ExpandMoreRoundedIcon from "@mui/icons-material/ExpandMoreRounded";
 import { useRouter } from "next/navigation";
@@ -45,7 +43,6 @@ const Navbar = (): JSX.Element => {
   const { clearCart, cart } = useShoppeKart((state) => state);
   const { user, logOut } = useUserStore((state) => state);
   const [settings, setSettings] = useState<HTMLElement | null>(null);
-  const [adminMenu, setAdminMenu] = useState<HTMLElement | null>(null);
   const [openDrawer, setOpenDrawer] = useState(false);
   const router = useRouter();
 
