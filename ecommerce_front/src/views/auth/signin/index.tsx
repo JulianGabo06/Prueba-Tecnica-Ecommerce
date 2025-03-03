@@ -1,5 +1,5 @@
 "use client";
-import { Container, Stack, Typography } from "@mui/material";
+import { Container, Stack, Typography, Card, CardContent } from "@mui/material";
 import React from "react";
 import Input from "@/components/forms/Input";
 import colors from "@/resources/colors";
@@ -13,63 +13,66 @@ const SignIn = (): JSX.Element => {
   const { user } = useUserStore((state) => state);
   const { handleChange, handleSubmit, email, password, loadingApi } =
     useLogin();
-  console.log(user);
+
   return (
-    <Container component="main">
-      <Stack
-        ml={{ xs: 0, md: 6 }}
-        component="form"
-        role="form"
-        gap={2}
-        maxWidth={400}
-        justifyContent="center"
-        height="calc(100dvh - 200px)"
-        pb={4}
-        onSubmit={handleSubmit}
-      >
-        <Typography variant="h3" fontWeight={600} mb={1}>
-          Inicio de sesión: ¡Accede ahora!
-        </Typography>
-        <Input
-          label="Email"
-          name="email"
-          type="email"
-          required
-          onChange={handleChange}
-          value={email}
-        />
-        <Input
-          label="Contraseña"
-          name="password"
-          type="password"
-          Icon
-          required
-          onChange={handleChange}
-          value={password}
-        />
-        <Stack gap={1} justifyContent="space-between" direction="row">
-          <Typography variant="body1">¿Olvidaste tu contraseña?</Typography>
-          <Typography
-            component={Link}
-            href="/recover-password"
-            variant="body1"
-            color={colors.primary}
-            sx={{ textDecoration: "none" }}
-          >
-            Recuperala aquí
-          </Typography>
-        </Stack>
-        <LoadingButton
-          variant="contained"
-          startIcon={<Face5Icon />}
-          sx={{ mt: 3 }}
-          loadingPosition="start"
-          type="submit"
-          loading={loadingApi.includes("POST__users/signin")}
-        >
-          Iniciar sesión
-        </LoadingButton>
-      </Stack>
+    <Container
+      component="main"
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "70vh",
+      }}
+    >
+      <Card sx={{ width: 400, p: 3, boxShadow: 3 }}>
+        <CardContent>
+          <Stack component="form" role="form" gap={3} onSubmit={handleSubmit}>
+            <Typography
+              variant="h4"
+              fontWeight={600}
+              textAlign="center"
+              gutterBottom
+            >
+              Inicio de sesión
+            </Typography>
+            <Input
+              label="Email"
+              name="email"
+              type="email"
+              required
+              onChange={handleChange}
+              value={email}
+            />
+            <Input
+              label="Contraseña"
+              name="password"
+              type="password"
+              required
+              onChange={handleChange}
+              value={password}
+            />
+            <Typography
+              component={Link}
+              href="/recover-password"
+              variant="body2"
+              color={colors.primary}
+              sx={{ textDecoration: "none", textAlign: "right" }}
+            >
+              ¿Olvidaste tu contraseña?
+            </Typography>
+            <LoadingButton
+              variant="contained"
+              sx={{ mt: 2 }}
+              loadingPosition="start"
+              type="submit"
+              loading={loadingApi.includes("POST__users/signin")}
+              fullWidth
+            >
+              Iniciar sesión
+            </LoadingButton>
+          </Stack>
+        </CardContent>
+      </Card>
     </Container>
   );
 };

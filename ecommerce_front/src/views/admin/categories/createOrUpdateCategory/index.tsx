@@ -19,7 +19,7 @@ const CreateOrUpdateCategory = ({ categorySlug }: Props) => {
   const handleGoBack = () => router.back();
   return (
     <Stack component="form" role="form" gap={2} my={4} onSubmit={handleSubmit}>
-      <LayoutFormCards title="Información basica">
+      <LayoutFormCards title="Nombra tu categoría">
         <Stack flex={2} gap={2}>
           <Input
             label="Nombre de la categoría"
@@ -28,7 +28,7 @@ const CreateOrUpdateCategory = ({ categorySlug }: Props) => {
             required
             onChange={({ target }) => handleChange(target.value)}
             value={category}
-            helperText="Aquí agregas el nombre de la categoría que quires crear, le podrás asociar esta categoria a productos..."
+            helperText="Aquí agregas el nombre de la categoría que quires crear, esto es muy importante al querer organizar tus productos..."
           />
         </Stack>
       </LayoutFormCards>

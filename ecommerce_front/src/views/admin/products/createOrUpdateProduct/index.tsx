@@ -1,14 +1,21 @@
 "use client";
 import DragAnDropUploadFile from "@/components/forms/DragAnDropUploadFile";
 import Input from "@/components/forms/Input";
-import LayoutFormCards from "@/components/layouts/LayoutFormCards";
-import colors from "@/resources/colors";
-import { Button, FormControl, FormLabel, Stack } from "@mui/material";
-import useManageProducts from "./useManageProducts";
+import {
+  Button,
+  FormControl,
+  FormLabel,
+  Stack,
+  Card,
+  CardContent,
+  Typography,
+  Grid,
+} from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import NumericFormatCustom from "@/components/forms/NumericFormat";
 import SelectCustom from "@/components/forms/SelectCustom";
 import { useRouter } from "next/navigation";
+import useManageProducts from "./useManageProducts";
 
 interface Props {
   productSlug: string;
@@ -34,99 +41,159 @@ const CreateOrUpdateProduct = ({ productSlug }: Props): JSX.Element => {
   } = useManageProducts();
 
   return (
-    <Stack component="form" role="form" gap={2} my={4} onSubmit={handleSubmit}>
-      <LayoutFormCards title="Información basica">
-        <Stack flex={2} gap={2}>
-          <Input
-            label="Nombre del producto"
-            name="name"
-            variant="outlined"
-            required
-            onChange={handleChange}
-            value={name}
-          />
-          <FormControl>
-            <FormLabel
-              htmlFor="description"
-              sx={{ color: colors.textPlaceholder, mb: 1 }}
+    <Stack
+      component="form"
+      role="form"
+      spacing={3}
+      my={4}
+      onSubmit={handleSubmit}
+    >
+      <Grid container spacing={3}>
+        {/* Información Básica */}
+        <Grid item xs={12} md={6}>
+          <Card sx={{ minHeight: 400 }}>
+            <CardContent
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                gap: 2,
+              }}
             >
-              Descripción
-            </FormLabel>
-            <Input
-              placeholder="Escribe una descripción para tu producto..."
-              variant="outlined"
-              multiline
-              rows={6}
-              required
-              name="description"
-              id="description"
-              onChange={handleChange}
-              value={description}
-            />
-          </FormControl>
-        </Stack>
-      </LayoutFormCards>
-      <LayoutFormCards title="Imagen">
-        <DragAnDropUploadFile
-          handleDropChange={handleDropChange}
-          selectedImage={selectedImage}
-          onChange={handleInputChange}
-        />
-      </LayoutFormCards>
-      <LayoutFormCards title="Precio y cantidad">
-        <Stack flex={2} gap={2}>
-          <Input
-            label="Precio"
-            InputProps={{
-              inputComponent: NumericFormatCustom as any,
-            }}
-            name="price"
-            onChange={handleChange}
-            value={price}
-            required
-            variant="outlined"
-          />
-          <Input
-            label="Stock"
-            InputProps={{
-              inputComponent: NumericFormatCustom as any,
-            }}
-            inputProps={{ isCurrency: false, prefix: "" }}
-            name="stock"
-            onChange={handleChange}
-            value={stock}
-            required
-            variant="outlined"
-          />
-        </Stack>
-      </LayoutFormCards>
-      <LayoutFormCards title="Categorias">
-        <Stack flex={2}>
-          <SelectCustom
-            options={categoryList}
-            label="Categorias"
-            name="categories"
-            variant="outlined"
-            multiple
-            onChange={handleChange}
-            value={categories}
-            renderValue={(selected: unknown) => {
-              return (selected as Array<number>)
-                .map((cat) => {
-                  const categoryData = categoryList.find(
-                    (item) => item?.value === cat
-                  );
-                  return categoryData?.label ?? "";
-                })
-                .join(", ");
-            }}
-            required
-          />
-        </Stack>
-      </LayoutFormCards>
-      {/* Buttons */}
-      <Stack direction="row" gap={2} justifyContent="flex-end">
-        <Button variant="text" onClick={handleGoBack}>
+              <Typography variant="h6" gutterBottom>
+                Información Básica
+              </Typography>
+              <Stack spacing={2}>
+                <FormLabel>Nombre</FormLabel>
+
+                <Input
+                  label="Nombre del producto"
+                  name="name"
+                  variant="outlined"
+                  required
+                  onChange={handleChange}
+                  value={name}
+                  fullWidth
+                />
+                <FormControl>
+                  <FormLabel>Descripción</FormLabel>
+                  <Input
+                    placeholder="Escribe una descripción..."
+                    variant="outlined"
+                    multiline
+                    rows={4}
+                    required
+                    name="description"
+                    onChange={handleChange}
+                    value={description}
+                  />
+                </FormControl>
+              </Stack>
+            </CardContent>
+          </Card>
+        </Grid>
+
+        {/* Imagen */}
+        <Grid item xs={12} md={6}>
+          <Card sx={{ minHeight: 400 }}>
+            <CardContent
+              sx={{
+                display: "flex",
+                gap: 2,
+                flexDirection: "column",
+              }}
+            >
+              <Typography variant="h6" gutterBottom>
+                Imagen
+              </Typography>
+              <DragAnDropUploadFile
+                handleDropChange={handleDropChange}
+                selectedImage={selectedImage}
+                onChange={handleInputChange}
+              />
+            </CardContent>
+          </Card>
+        </Grid>
+      </Grid>
+
+      <Grid container spacing={3}>
+        {/* Precio y Cantidad */}
+        <Grid item xs={12} md={6}>
+          <Card sx={{ minHeight: 400 }}>
+            <CardContent
+              sx={{
+                display: "flex",
+                gap: 2,
+                flexDirection: "column",
+              }}
+            >
+              <Typography variant="h6" gutterBottom>
+                Precio y Cantidad
+              </Typography>
+              <Stack spacing={2}>
+                <Input
+                  label="Precio"
+                  InputProps={{ inputComponent: NumericFormatCustom as any }}
+                  name="price"
+                  onChange={handleChange}
+                  value={price}
+                  required
+                  variant="outlined"
+                />
+                <Input
+                  label="Stock"
+                  InputProps={{ inputComponent: NumericFormatCustom as any }}
+                  inputProps={{ isCurrency: false, prefix: "" }}
+                  name="stock"
+                  onChange={handleChange}
+                  value={stock}
+                  required
+                  variant="outlined"
+                />
+              </Stack>
+            </CardContent>
+          </Card>
+        </Grid>
+
+        {/* Categorías */}
+        <Grid item xs={12} md={6}>
+          <Card sx={{ minHeight: 400 }}>
+            <CardContent
+              sx={{
+                display: "flex",
+                gap: 2,
+                flexDirection: "column",
+              }}
+            >
+              <Typography variant="h6" gutterBottom>
+                Categorías
+              </Typography>
+              <SelectCustom
+                options={categoryList}
+                label="Categorías"
+                name="categories"
+                variant="outlined"
+                multiple
+                onChange={handleChange}
+                value={categories}
+                renderValue={(selected: unknown) => {
+                  return (selected as Array<number>)
+                    .map(
+                      (cat) =>
+                        categoryList.find((item) => item?.value === cat)
+                          ?.label ?? ""
+                    )
+                    .join(", ");
+                }}
+                required
+              />
+            </CardContent>
+          </Card>
+        </Grid>
+      </Grid>
+
+      {/* Botones */}
+      <Stack direction="row" spacing={2} justifyContent="flex-end">
+        <Button variant="outlined" onClick={handleGoBack} color="secondary">
           Cancelar
         </Button>
         <LoadingButton
@@ -134,7 +201,7 @@ const CreateOrUpdateProduct = ({ productSlug }: Props): JSX.Element => {
           type="submit"
           loading={loadingApi.includes("POST__products/create")}
         >
-          Crear
+          {isNewProduct ? "Crear" : "Actualizar"}
         </LoadingButton>
       </Stack>
     </Stack>

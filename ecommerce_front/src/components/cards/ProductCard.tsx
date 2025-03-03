@@ -6,6 +6,7 @@ import Image from "next/image";
 import LocalMallIcon from "@mui/icons-material/LocalMall";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import AddIcon from "@mui/icons-material/Add";
 
 interface Props {
   product: IProduct;
@@ -55,7 +56,6 @@ const ProductCard = ({ product }: Props) => {
           <Typography variant="body1">
             {formatCurrency(product.price as number)}
           </Typography>
-          <Rating name="read-only" value={5} readOnly size="small" />
         </Stack>
         <Stack
           width={40}
@@ -69,7 +69,7 @@ const ProductCard = ({ product }: Props) => {
             transition: "all .2s ease-out",
           }}
         >
-          <LocalMallIcon fontSize="small" color="inherit" />
+          <AddIcon fontSize="small" color="inherit" />
         </Stack>
       </Stack>
     </Stack>

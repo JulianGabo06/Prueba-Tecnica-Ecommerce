@@ -1,6 +1,7 @@
 "use client";
 import colors from "@/resources/colors";
 import {
+  Box,
   Button,
   Container,
   InputAdornment,
@@ -81,37 +82,22 @@ const Navbar = (): JSX.Element => {
       <Container component="main">
         <Stack
           component="header"
-          py={1}
+          py={2}
           direction="row"
           gap={2}
           justifyContent="space-between"
         >
-          <Image
-            src={logo}
-            alt="shop zone pro logo image"
-            width={170}
-            style={{ objectFit: "cover" }}
-            priority
-          />
+          <Box />
           <Stack gap={1} flexDirection={"row"} alignItems={"center"}>
-            <Input
-              placeholder="Search"
-              sx={{ minWidth: 300, display: { xs: "none", sm: "initial" } }}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <SearchIcon />
-                  </InputAdornment>
-                ),
-              }}
-            />
             {!user?.name ? (
               <Stack component="ul" direction="row" gap={1}>
-                <Typography component={Link} href="/" color="inherit">
+                <Typography component={Link} href="/" color="primary">
                   Iniciar sesión
                 </Typography>
-                <Typography component="span">/</Typography>
-                <Typography component={Link} href="/signup" color="inherit">
+                <Typography component="span" color="primary">
+                  /
+                </Typography>
+                <Typography component={Link} href="/signup" color="primary">
                   Registrate
                 </Typography>
               </Stack>

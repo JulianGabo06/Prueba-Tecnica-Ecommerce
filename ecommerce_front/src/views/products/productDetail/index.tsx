@@ -56,12 +56,7 @@ const ProductDetail = ({ product }: Props) => {
       </Stack>
       <Stack component="section" flex={2} gap={2}>
         <Typography variant="h2">{name}</Typography>
-        <Stack direction="row" gap={1} alignItems="center">
-          <Rating name="read-only" value={5} readOnly size="small" />
-          <Typography variant="caption" color={colors.textDisabled}>
-            300 reviews
-          </Typography>
-        </Stack>
+
         <Typography variant="h4" color="primary">
           {formatCurrency(price)}
         </Typography>

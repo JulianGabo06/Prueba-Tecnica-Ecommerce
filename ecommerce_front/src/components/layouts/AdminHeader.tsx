@@ -58,22 +58,28 @@ const AdminHeader = (): JSX.Element => {
           })}
         </Breadcrumbs>
       </Stack>
-      {currentPath &&
-        !["create-category", "create-product"].includes(currentPath.path) && (
-          <Button
-            sx={{ px: 1, py: 1, minWidth: 0 }}
-            variant="outlined"
-            onClick={() =>
-              handleGoToCreate(
-                currentPath.path === "products"
-                  ? "create-product"
-                  : "create-category"
-              )
-            }
-          >
-            <AddIcon />
-          </Button>
-        )}
+      <Stack gap={2} flexDirection={"row"}>
+        {currentPath &&
+          !["create-category", "create-product"].includes(currentPath.path) && (
+            <Button
+              sx={{ px: 1, py: 1, minWidth: 0 }}
+              variant="outlined"
+              onClick={() => router.push("/admin/categories/create-category")}
+            >
+              <Typography>Crear categoría</Typography>
+            </Button>
+          )}
+        {currentPath &&
+          !["create-category", "create-product"].includes(currentPath.path) && (
+            <Button
+              sx={{ px: 1, py: 1, minWidth: 0 }}
+              variant="outlined"
+              onClick={() => handleGoToCreate("create-product")}
+            >
+              <Typography>Crear producto</Typography>
+            </Button>
+          )}
+      </Stack>
     </Stack>
   );
 };

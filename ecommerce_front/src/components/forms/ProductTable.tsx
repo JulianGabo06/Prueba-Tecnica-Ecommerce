@@ -30,6 +30,7 @@ import SelectCustom from "./SelectCustom";
 const header = [
   "Id",
   "Nombre",
+  "Imagen",
   "Stock",
   "Precio",
   "Fecha de creación",
@@ -115,6 +116,15 @@ const ProductTable = ({
               <TableCell>{product.id}</TableCell>
               <TableCell sx={{ maxWidth: 350 }}>
                 <Stack direction="row" gap={1} alignItems="center">
+                  <Stack gap={1}>
+                    <Typography sx={{ textOverflow: "ellipsis" }}>
+                      {product.name}
+                    </Typography>
+                  </Stack>
+                </Stack>
+              </TableCell>
+              <TableCell sx={{ maxWidth: 350 }}>
+                <Stack direction="row" gap={1} alignItems="center">
                   <Image
                     src={product.images[0]}
                     alt={`${product.name} image`}
@@ -123,11 +133,6 @@ const ProductTable = ({
                     style={{ objectFit: "cover" }}
                     loading="lazy"
                   />
-                  <Stack gap={1}>
-                    <Typography sx={{ textOverflow: "ellipsis" }}>
-                      {product.name}
-                    </Typography>
-                  </Stack>
                 </Stack>
               </TableCell>
               <TableCell>

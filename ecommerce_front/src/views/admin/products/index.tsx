@@ -5,7 +5,6 @@ import React from "react";
 import useProducts from "./useProducts";
 import colors from "@/resources/colors";
 import Input from "@/components/forms/Input";
-import Link from "next/link";
 import SearchIcon from "@mui/icons-material/Search";
 
 const style = {
@@ -33,9 +32,7 @@ const Products = (): JSX.Element => {
       <Stack component="section" gap={2}>
         <Grow in>
           <Alert severity="info">
-            Para crear un producto debe de haber como minimo 1 categoria, si no
-            hay categorías creada, agrega{" "}
-            <Link href="/admin/categories/create-category">aquí</Link>
+            Recomendable crear una categoria antes de crear un producto. {""}
           </Alert>
         </Grow>
         <Stack direction="row" gap={2} justifyContent="flex-end">
