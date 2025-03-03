@@ -1,9 +1,9 @@
 import { IProduct } from "@/interfaces/product_response.interface";
 import colors from "@/resources/colors";
 import { formatCurrency } from "@/resources/numberManager";
-import { Rating, Stack, Typography } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import Image from "next/image";
-import LocalMallIcon from "@mui/icons-material/LocalMall";
+
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import AddIcon from "@mui/icons-material/Add";
@@ -50,7 +50,7 @@ const ProductCard = ({ product }: Props) => {
         justifyContent="space-between"
       >
         <Stack gap={0.5}>
-          <Typography variant="caption" color={colors.textSubtitle}>
+          <Typography variant="caption" color={colors.textLight}>
             {product.name}
           </Typography>
           <Typography variant="body1">

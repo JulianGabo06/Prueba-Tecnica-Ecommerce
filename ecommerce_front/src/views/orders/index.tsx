@@ -22,7 +22,7 @@ import jsPDF from "jspdf";
 
 const UserOrdersTable = () => {
   const { user } = useUserStore((state) => state);
-  const { GetOrderAll, GetOrderById, userOrders } = useOrders();
+  const { GetOrderById, userOrders } = useOrders();
 
   useEffect(() => {
     if (user?.id) {
